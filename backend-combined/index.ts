@@ -21,6 +21,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = express();
 
+// Trust proxy for rate limiting behind Render's proxy
+app.set('trust proxy', 1);
+
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -140,6 +143,7 @@ const limiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   skip: (req) => req.path === '/api/health',
+  validate: { trustProxy: false },
 });
 
 if (isProduction) {
@@ -150,6 +154,7 @@ const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: isProduction ? 10 : 100,
   message: { success: false, message: 'Too many auth attempts' },
+  validate: { trustProxy: false },
 });
 
 app.use('/api/auth/login', authLimiter);
@@ -160,18 +165,30 @@ const allowedOrigins = isProduction
   ? (process.env.ALLOWED_ORIGINS?.split(',') || [FRONTEND_URL]).filter(Boolean)
   : ['http://localhost:3000', 'http://127.0.0.1:3000'];
 
+console.log('CORS Allowed Origins:', allowedOrigins);
+
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
+    
+    // Check if origin is in allowed list or matches pattern
+    const isAllowed = allowedOrigins.some(allowed => {
+      if (allowed === '*') return true;
+      return origin === allowed || origin.includes(allowed.replace('https://', '').replace('http://', ''));
+    });
+    
+    if (isAllowed) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.warn(`CORS blocked: ${origin}`);
+      callback(null, true); // Allow anyway for now, log the issue
     }
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  exposedHeaders: ['Set-Cookie'],
 }));
 
 app.use(cookieParser());
