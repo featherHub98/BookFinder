@@ -1,0 +1,21 @@
+{
+  "name": "BookWorm - Book Recommendations",
+  "short_name": "BookWorm",
+  "description": "Discover personalized book recommendations and track your reading journey",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#d97706",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["books", "education", "lifestyle"],
+  "screenshots": [],
+  "prefer_related_applications": false
+}
