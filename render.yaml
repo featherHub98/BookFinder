@@ -12,7 +12,7 @@ services:
       - key: PORT
         value: 3001
       - key: MONGODB_URI
-        value: mongodb+srv://bookworm:gvfe36IKNbFM9xkg@bookworm-cluster.6dsryzf.mongodb.net/bookworm?retryWrites=true&w=majority
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRES_IN
@@ -20,8 +20,8 @@ services:
       - key: FRONTEND_URL
         sync: false
       - key: RESEND_API_KEY
-        value: re_HLCrqT3f_5WmEJo6wxdp9L1mv58vuN9us
+        sync: false
       - key: FROM_EMAIL
-        value: onboarding@resend.dev
+        sync: false
       - key: ALLOWED_ORIGINS
         sync: false
