@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   creator: "BookWorm",
   publisher: "BookWorm",
   icons: {
-    icon: "/logo.svg",
-    shortcut: "/logo.svg",
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
     apple: "/logo.svg",
   },
   manifest: "/manifest.json",

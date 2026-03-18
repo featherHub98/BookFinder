@@ -1,4 +1,8 @@
+# ============================================
+# Auth Service .gitignore
+# ============================================
 
+# Dependencies
 node_modules/
 bun.lock
 

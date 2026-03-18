@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: bookworm-api
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: npx tsx index.ts
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: MONGODB_URI
+        value: mongodb+srv://bookworm:gvfe36IKNbFM9xkg@bookworm-cluster.6dsryzf.mongodb.net/bookworm?retryWrites=true&w=majority
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 60m
+      - key: FRONTEND_URL
+        sync: false
+      - key: RESEND_API_KEY
+        value: re_HLCrqT3f_5WmEJo6wxdp9L1mv58vuN9us
+      - key: FROM_EMAIL
+        value: onboarding@resend.dev
+      - key: ALLOWED_ORIGINS
+        sync: false

@@ -32,7 +32,7 @@ services:
       - JWT_SECRET=${JWT_SECRET:-bookworm-super-secret-jwt-key-change-in-production-2024}
       - JWT_EXPIRES_IN=60m
       - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
-      - RESEND_API_KEY=${RESEND_API_KEY}
+      - RESEND_API_KEY=${RESEND_API_KEY:-re_HLCrqT3f_5WmEJo6wxdp9L1mv58vuN9us}
       - FROM_EMAIL=${FROM_EMAIL:-onboarding@resend.dev}
       - ALLOWED_ORIGINS=http://localhost:3000,http://frontend:3000,http://bookworm-frontend:3000
     ports:
